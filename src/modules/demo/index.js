@@ -11,7 +11,8 @@ import api from './api';
 Vue.use(VueRouter);
 Vue.use(VueResource);
 window.onerror = function(e) {
-	// send error to
+    // send error to
+    console.log(e);
 };
 window.Toast = Toast;
 // if(process.env.NODE_ENV == 'production'){}

@@ -42,7 +42,7 @@ app.get('/', function (req, res, next) {
 })
 
 app.use(router);
-mock && routes(router);
+isMock && routes(router);
 
 //进度
 var readline = require('readline');
