@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webpack4 demo</title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <script type="text/javascript" src="../static/js/polyfill.min.js"></script>
+    <% var env = htmlWebpackPlugin.options.env; var sourceMap = htmlWebpackPlugin.files.sourceMap;%>
+    <% if( env == 'prod' || env == 'pre') { %>
+    <script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script>
+
+    <% } else {%>
+
+    <script src="../static/js/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
+    <%}%>
+
+    <script type="text/javascript">
+        // 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
+        (function(doc, win) {
+            var docEl = doc.documentElement,
+                    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if (clientWidth > 1080) {
+                    clientWidth = 1080;
+                }
+                docEl.style.fontSize = (clientWidth / 10) + 'px';
+            }; //以iPhone6为基准  body 100px rem=size/100 红包页面以iphone6为基准
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+
+</head>
+<body data-ctr-page = "pageview" class="fullscreen">
+<div id="application" class="view" ></div>
+<div style="width:0;height:0">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  	"presets": [
+    	["env",{
+	        "targets": {
+	            "chrome": 52,
+	            "browsers": ["last 2 versions","safari 7"]
+	        },
+	        "modules": false,
+		    "useBuiltIns": true,
+		    "loose":true
+    	}]
+  	],
+  	"plugins": [
+  	 	["transform-runtime", {
+      		"helpers": false,
+      		"polyfill": false,
+      		"regenerator": true,
+      		"moduleName": "babel-runtime"
+    	}],
+  		["syntax-dynamic-import"],
+  		["transform-object-rest-spread"],
+  		["transform-async-to-module-method", {
+	      	"module": "bluebird",
+	      	"method": "coroutine"
+	    }]
+  	]
+}
