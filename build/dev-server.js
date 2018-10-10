@@ -5,6 +5,8 @@ var args = require('yargs').argv;
 require('./check-versions')()
 var config = require('./config')
 
+var isMock = args.mock;
+var port = args.port;
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = JSON.parse(config.env.NODE_ENV)
 }
@@ -19,7 +21,7 @@ var webpackConfig = process.env.NODE_ENV === 'production'
     : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.port
+var port = port || process.env.PORT || config.port
 // automatically open browser, if not set will be false
 var autoOpenBrowser = !!config.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
@@ -28,6 +30,19 @@ var proxyTable = config.proxyTable
 
 var app = express()
 var compiler = webpack(webpackConfig);
+
+// mock
+
+// 设置代理
+
+var routes = require('../mock/router');
+var router = express.Router();
+app.get('/', function (req, res, next) {
+  	res.send('> hello welcome to dev server');
+})
+
+app.use(router);
+mock && routes(router);
 
 //进度
 var readline = require('readline');
@@ -56,20 +71,20 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {
 })
 /* webpack 4 reload everytime*/
 // force page reload when html-webpack-plugin template changes
-/*compiler.plugin('compilation', function (compilation) {
+compiler.plugin('compilation', function (compilation) {
     compilation.plugin('html-webpack-plugin-after-emit', function (data) {
         hotMiddleware.publish({action: 'reload'})
     })
-})//*/
+})//
 
 // proxy api requests
-// Object.keys(proxyTable).forEach(function (context) {
-//     var options = proxyTable[context]
-//     if (typeof options === 'string') {
-//         options = {target: options}
-//     }
-//     app.use(proxyMiddleware(options.filter || context, options))
-// })
+proxyTable && Object.keys(proxyTable).forEach(function (context) {
+    var options = proxyTable[context]
+    if (typeof options === 'string') {
+        options = {target: options}
+    }
+    app.use(proxyMiddleware(options.filter || context, options))
+})
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
@@ -90,6 +105,7 @@ var _resolve
 var readyPromise = new Promise(resolve => {
     _resolve = resolve
 })
+
 
 console.log('> Starting dev server...')
 devMiddleware.waitUntilValid(() => {
@@ -116,6 +132,6 @@ module.exports = {
     }
 }
 
-if (process.argv.indexOf('--mock') > -1)
-    require('dynamic-mocker').checkStart('./mock/mock-config.js')
+// if (process.argv.indexOf('--mock') > -1)
+//     require('dynamic-mocker').checkStart('./mock/mock-config.js')
 
