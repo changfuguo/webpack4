@@ -33,8 +33,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: '[name]/index.[hash:8].css',
-            chunkFilename: '[name]/[id].css'
+            filename: '[name]/index.[contenthash:8].css',
+            chunkFilename: '[name]/chunk.[contenthash:8].css'
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
@@ -81,6 +81,7 @@ var webpackConfig = merge(baseWebpackConfig, {
                     name: 'common',
                     priority: 11,
                     chunks: 'all',
+                    enforce: true,
                     test: /[\\/]src[\\/]common[\\/]/,
                 },
             }

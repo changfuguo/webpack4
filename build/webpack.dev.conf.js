@@ -18,12 +18,13 @@ function KeepEntry() {
 	//有特定的modules
 	if (modules.length > 0) {
 		modules.map((module) => {
-            console.log('module:' + module);
 			if (entries[module]) {
 				newEntries[module] = entries[module];
 			}
-		})
-		baseWebpackConfig.entry =  newEntries;
+		});
+        if (Object.keys(newEntries).length > 0) {
+            baseWebpackConfig.entry =  newEntries;
+        }
 	}
 }
 KeepEntry();
