@@ -11,10 +11,14 @@ var argv = require('yargs').argv;
 function KeepEntry() {
 	var newEntries = {};
 	var modules = (argv.m || '').split(',');
+    modules = modules.filter(function(module) {
+        return module.replace(/\s+/, '') != '';
+    });
 	var entries = baseWebpackConfig.entry;
 	//有特定的modules
 	if (modules.length > 0) {
 		modules.map((module) => {
+            console.log('module:' + module);
 			if (entries[module]) {
 				newEntries[module] = entries[module];
 			}
@@ -22,7 +26,7 @@ function KeepEntry() {
 		baseWebpackConfig.entry =  newEntries;
 	}
 }
-// KeepEntry();
+KeepEntry();
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
     baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
