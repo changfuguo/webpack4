@@ -25,6 +25,7 @@ var ret = {
     dev: {
         env: require('./dev.env'),
         port: 8092,
+        assetsRoot: path.resolve(__dirname, '../../dist/dev'),
         autoOpenBrowser: true,
         assetsSubDirectory: '',
         assetsPublicPath: '',
