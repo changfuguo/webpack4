@@ -1,4 +1,20 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><title>webpack4 demo</title><meta name="format-detection" content="telephone=no"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><script type="text/javascript" src="../static/js/polyfill.min.js"></script><script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script><script type="text/javascript">// 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webpack4 demo </title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <script type="text/javascript" src="../static/js/polyfill.min.js"></script>
+    
+    
+    <script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script>
+
+    
+
+    <script type="text/javascript">
+        // 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
         (function(doc, win) {
             var docEl = doc.documentElement,
                     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
@@ -13,4 +29,14 @@
             if (!doc.addEventListener) return;
             win.addEventListener(resizeEvt, recalc, false);
             doc.addEventListener('DOMContentLoaded', recalc, false);
-        })(document, window);</script><link href="../demo/chunk.c8bc9f83.css" rel="stylesheet"></head><body data-ctr-page="pageview" class="fullscreen"><div id="application" class="view"></div><div style="width:0;height:0"></div><script type="text/javascript" src="../manifest/demo/index.04cad377.js"></script><script type="text/javascript" src="../common.ecc57090.js"></script><script type="text/javascript" src="../vendor.bf763fd9.js"></script><script type="text/javascript" src="../demo.feefa773.js"></script></body></html>
+        })(document, window);
+    </script>
+
+<link href="../demo/chunk.2.css" rel="stylesheet"></head>
+<body data-ctr-page = "pageview" class="fullscreen">
+<div id="application" class="view" ></div>
+<div style="width:0;height:0">
+
+</div>
+<script type="text/javascript" src="../manifest/demo/index.43cd3b50.js"></script><script type="text/javascript" src="../common/main.55404259.js"></script><script type="text/javascript" src="../vendor/main.6b24a399.js"></script><script type="text/javascript" src="../demo/main.2d7ee228.js"></script></body>
+</html>

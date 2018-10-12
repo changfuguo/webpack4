@@ -1,7 +1,7 @@
 <template lang="html">
    <div class="page">
         <div class="page-body page-home">
-        	here is home x
+        	here is home xxxxxxasdf
         </div>
    </div>
 </template>

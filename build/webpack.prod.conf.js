@@ -21,7 +21,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     output: {
         path: config.assetsRoot,
         filename: utils.assetsPath('[name]/index.[chunkhash:8].js'),
-        chunkFilename: utils.assetsPath('[name].[chunkhash:8].js'),
+        chunkFilename: utils.assetsPath('[name]/main.[chunkhash:8].js'),
         publicPath: '../'
     },
     plugins: [
@@ -33,8 +33,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional
-            filename: '[name]/index.[contenthash:8].css',
-            chunkFilename: '[name]/chunk.[contenthash:8].css'
+            filename: '[name]/index.[hash:8].css',
+            chunkFilename: '[name]/chunk.[id].css'
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.

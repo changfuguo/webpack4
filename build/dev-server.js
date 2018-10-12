@@ -35,14 +35,14 @@ var compiler = webpack(webpackConfig);
 
 // 设置代理
 
-var routes = require('../mock/router');
-var router = express.Router();
-app.get('/', function (req, res, next) {
-  	res.send('> hello welcome to dev server');
-})
+// var routes = require('../mock/router');
+// var router = express.Router();
+// app.get('/', function (req, res, next) {
+//   	res.send('> hello welcome to dev server');
+// })
 
-app.use(router);
-isMock && routes(router);
+// app.use(router);
+// isMock && routes(router);
 
 //进度
 var readline = require('readline');
@@ -71,11 +71,11 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {
 })
 /* webpack 4 reload everytime*/
 // force page reload when html-webpack-plugin template changes
-compiler.plugin('compilation', function (compilation) {
-    compilation.plugin('html-webpack-plugin-after-emit', function (data) {
-        hotMiddleware.publish({action: 'reload'})
-    })
-})//
+// compiler.plugin('compilation', function (compilation) {
+//     compilation.plugin('html-webpack-plugin-after-emit', function (data) {
+//         hotMiddleware.publish({action: 'reload'})
+//     })
+// })
 
 // proxy api requests
 proxyTable && Object.keys(proxyTable).forEach(function (context) {

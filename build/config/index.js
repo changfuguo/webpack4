@@ -28,7 +28,7 @@ var ret = {
         assetsRoot: path.resolve(__dirname, '../../dist/dev'),
         autoOpenBrowser: true,
         assetsSubDirectory: '',
-        assetsPublicPath: '',
+        // assetsPublicPath: '',
         // proxyTable: {
         //     '/api': {
         //         target: 'http://localhost:3000',

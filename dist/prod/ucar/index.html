@@ -1,4 +1,22 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><title>webpack4 demo</title><meta name="format-detection" content="telephone=no"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><script type="text/javascript" src="../static/js/polyfill.min.js"></script><script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script><script type="text/javascript">// 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webpack4 demo </title>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <script type="text/javascript" src="../static/js/polyfill.min.js"></script>
+    
+    
+    <script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script>
+
+    
+    <script type="text/javascript">
+    window.__sourceMap = {"publicPath":"../","chunks":{"common":{"size":15415,"entry":"../common/main.55404259.js","hash":"55404259ff37e665aa67","css":[]},"vendor":{"size":640966,"entry":"../vendor/main.6b24a399.js","hash":"6b24a3992e454e52662c","css":[]},"manifest/ucar":{"size":0,"entry":"../manifest/ucar/index.6ab75f3e.js","hash":"6ab75f3e7aefc0d86438","css":[]},"ucar":{"size":34738,"entry":"../ucar/main.6eb37867.js","hash":"6eb37867ce6bf1d28323","css":["../ucar/chunk.3.css"]}},"js":["../common/main.55404259.js","../vendor/main.6b24a399.js","../manifest/ucar/index.6ab75f3e.js","../ucar/main.6eb37867.js"],"css":["../ucar/chunk.3.css"]};
+    </script>
+    <script type="text/javascript">
+        // 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
         (function(doc, win) {
             var docEl = doc.documentElement,
                     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
@@ -13,4 +31,14 @@
             if (!doc.addEventListener) return;
             win.addEventListener(resizeEvt, recalc, false);
             doc.addEventListener('DOMContentLoaded', recalc, false);
-        })(document, window);</script><link href="../ucar/chunk.37e9a2ea.css" rel="stylesheet"></head><body data-ctr-page="pageview" class="fullscreen"><div id="application" class="view"></div><div style="width:0;height:0"></div><script type="text/javascript" src="../common.ecc57090.js"></script><script type="text/javascript" src="../vendor.bf763fd9.js"></script><script type="text/javascript" src="../manifest/ucar/index.1cece20b.js"></script><script type="text/javascript" src="../ucar.69e59208.js"></script></body></html>
+        })(document, window);
+    </script>
+
+<link href="../ucar/chunk.3.css" rel="stylesheet"></head>
+<body data-ctr-page = "pageview" class="fullscreen">
+<div id="application" class="view" ></div>
+<div style="width:0;height:0">
+
+</div>
+<script type="text/javascript" src="../common/main.55404259.js"></script><script type="text/javascript" src="../vendor/main.6b24a399.js"></script><script type="text/javascript" src="../manifest/ucar/index.6ab75f3e.js"></script><script type="text/javascript" src="../ucar/main.6eb37867.js"></script></body>
+</html>

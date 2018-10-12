@@ -113,14 +113,14 @@ function htmlPlugin(exConfig) {
     return new HtmlWebpackPlugin(Object.assign({
         template: './src/views/' + exConfig.module + '.ejs',
         inject: true,
-        env: process.env.BUILD_ENV,
-        minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeAttributeQuotes: false
-            // more options:
-            // https://github.com/kangax/html-minifier#options-quick-reference
-        },
+        env: process.env.BUILD_ENV
+        // minify: {
+        //     removeComments: true,
+        //     collapseWhitespace: true,
+        //     removeAttributeQuotes: false
+        //     // more options:
+        //     // https://github.com/kangax/html-minifier#options-quick-reference
+        // },
         // chunksSortMode: 'dependency',
     }, exConfig))
 }
