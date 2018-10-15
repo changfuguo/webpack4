@@ -3,7 +3,7 @@ var utils = require('./utils')
 var config = require('./config')
 var vueLoaderConfig = require('./vue-loader.conf')
 const {VueLoaderPlugin} = require('vue-loader');
-
+var AssetsPlugin = require('assets-webpack-plugin')
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
@@ -72,7 +72,12 @@ module.exports = {
         ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new AssetsPlugin({
+            filename: "manifest.json",
+            path: config.assetsRoot,
+            prettyPrint: true
+        })
     ],
 
     node: {
