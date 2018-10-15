@@ -2,6 +2,7 @@
    <div class="page">
         <div class="page-body page-home">
         	here is home
+            <div>{{now}}</div>
         </div>
    </div>
 </template>
@@ -9,14 +10,15 @@
     import {mapActions, mapState, mapGetters} from 'vuex';
     import emitter from '../../../../common/mixins/emitter';
     import appConf from '../../../../config';
-    import {RESULT_FAILURE_LICENSE, RESULT_PENDING_LICENSE} from '../../store/constants';
+    import {format} from 'lib/date';
 
     export default {
         name: 'home',
         mixins: [emitter],
         data() {
             return {
-                loaded: false
+                loaded: false,
+                now: format(new Date, 'yyyy-MM')
             };
         },
         components: {
