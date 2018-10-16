@@ -3,6 +3,7 @@
         <div class="page-body page-home">
         	here is home
             <div>{{now}}</div>
+            <img src="~images/ucar/nx.png">
         </div>
    </div>
 </template>
@@ -10,7 +11,7 @@
     import {mapActions, mapState, mapGetters} from 'vuex';
     import emitter from '../../../../common/mixins/emitter';
     import appConf from '../../../../config';
-    import {format} from 'lib/date';
+    import {format, isLeapYear} from 'lib/date';
 
     export default {
         name: 'home',
@@ -18,7 +19,8 @@
         data() {
             return {
                 loaded: false,
-                now: format(new Date, 'yyyy-MM')
+                now: format(new Date, 'yyyy-MM'),
+                isLeapYear: isLeapYear(new Date)
             };
         },
         components: {

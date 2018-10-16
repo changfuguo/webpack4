@@ -2,31 +2,7 @@
   "demo": {
     "js": "/demo.js"
   },
-  "demo/home": {
-    "js": "/demo/home.js"
-  },
   "ucar": {
     "js": "/ucar.js"
-  },
-  "ucar/home": {
-    "js": "/ucar/home.js"
-  },
-  "ucar/license": {
-    "js": "/ucar/license.js"
-  },
-  "": {
-    "js": [
-      "/precache-manifest.de5878a92214000c29cc8793b43108f3.js",
-      "/service-worker.js"
-    ],
-    "html": [
-      "/demo/index.html",
-      "/ucar/index.html"
-    ],
-    "json": [
-      "/026aa6dd5ffb1e0c1a2d.hot-update.json",
-      "/03ceb415f7a042c602be.hot-update.json",
-      "/fb8f1b2cf9be7d025c23.hot-update.json"
-    ]
   }
 }

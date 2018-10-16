@@ -20,7 +20,12 @@ var ret = {
         // View the bundle analyzer report after build finishes:
         // `npm run build --report`
         // Set to `true` or `false` to always turn it on or off
-        bundleAnalyzerReport: false
+        bundleAnalyzerReport: false,
+        usedPWA: true,
+        service: {
+            scope: '/public/',
+            remote: []
+        }
     },
     dev: {
         env: require('./dev.env'),
@@ -41,7 +46,12 @@ var ret = {
         // (https://github.com/webpack/css-loader#sourcemaps)
         // In our experience, they generally work as expected,
         // just be aware of this issue when enabling this option.
-        cssSourceMap: true
+        cssSourceMap: true,
+        usedPWA: true,
+        service: {
+            scope: '/',
+            remote:[]
+        }
     },
     qa: {
     	env: require('./qa.env'),
@@ -59,9 +69,13 @@ var ret = {
         // View the bundle analyzer report after build finishes:
         // `npm run build --report`
         // Set to `true` or `false` to always turn it on or off
-        bundleAnalyzerReport: false
+        bundleAnalyzerReport: false,
+        usedPWA: true
     }
 }
 process.env.BUILD_ENV = process.env.BUILD_ENV  || 'dev';
 let env = process.env.BUILD_ENV;
-module.exports = ret[env];
+let returnEnv = ret[env];
+let service = require('../../package').service;
+returnEnv.service = Object.assign({}, service, returnEnv.service);
+module.exports = returnEnv;

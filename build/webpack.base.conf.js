@@ -4,11 +4,12 @@ var config = require('./config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var {VueLoaderPlugin} = require('vue-loader');
 var AssetsPlugin = require('assets-webpack-plugin')
-
+var fs = require('fs')
+var ProcessSWOutput = require('./process.sw');
+var SW_CONFIG_NAME = "sw_config." + config.service.version+ ".js"
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
-
 module.exports = {
     entry: utils.getEntryPages(),
     output: {
@@ -74,12 +75,20 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new AssetsPlugin({
-            filename: "manifest.json",
+
+    ].concat(config.usedPWA ?  new AssetsPlugin({
+            filename: SW_CONFIG_NAME,
             path: config.assetsRoot,
-            prettyPrint: true
-        })
-    ],
+            prettyPrint: true,
+            processOutput: function (assets) {
+                var content = fs.readFileSync(resolve('src/service-worker.js'),'utf-8');
+                var finalFile = path.join(config.assetsRoot + '/service-worker.js');
+                content = content.replace('<%SW_CONFIG_NAME%>', SW_CONFIG_NAME);
+                fs.writeFileSync( finalFile,content, {encoding: 'utf-8'} );
+                var newAssets = ProcessSWOutput.process(assets);
+                return 'var sw_config = ' + JSON.stringify(newAssets)
+              }
+        }): []),
 
     node: {
         // prevent webpack from injecting useless setImmediate polyfill because Vue

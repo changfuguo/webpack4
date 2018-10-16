@@ -99,6 +99,8 @@ app.use(hotMiddleware)
 // serve pure static assets
 app.use('/static/', express.static(path.join(__dirname, '../src/static')));
 
+// 这里将dev的目录设置为静态目录，方便自己手动声称文件
+app.use(express.static(config.assetsRoot));
 var uri = 'http://localhost:' + port
 
 var _resolve

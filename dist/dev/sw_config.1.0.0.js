@@ -1,0 +1,1 @@
+var sw_config = {"runtime":["/demo.js","/demo/home.js","/ucar.js","/ucar/home.js","/ucar/license.js"],"static":["/static/images/nx.a48bf1b.png"],"remote":[]}

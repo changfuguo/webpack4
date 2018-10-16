@@ -14,3 +14,6 @@
 [Service_Worker_API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 [pwa-service-worker](http://lzw.me/a/pwa-service-worker.html)
 [Web离线应用解决方案——ServiceWorker](https://www.cnblogs.com/dojo-lzz/p/8047336.html)
+
+
+//  chrome://serviceworker-internals/
