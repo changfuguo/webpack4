@@ -36,13 +36,18 @@ exports.process = function (sw_config) {
             });
         }
     })
-console.log(assets)
+
+    // 合并config remote
+    assets.remote = assets.remote.concat(service.remote);
+    assets.static = assets.static.concat(service.static);
     Object.keys(assets).map(function(key) {
-        assets[key] = assets[key].map(function(resource) {
-            var newResource = resource.substr(0, 3) == '../' ? resource.substr(3) : resource;
-            let newPath = url.resolve(service.scope, newResource);
-            return newPath;
-        })
+       if ( key != 'remote' ) {
+           assets[key] = assets[key].map(function(resource) {
+                var newResource = resource.substr(0, 3) == '../' ? resource.substr(3) : resource;
+                let newPath = url.resolve(service.scope, newResource);
+                return newPath;
+            })
+        }
     });
     return assets;
 }

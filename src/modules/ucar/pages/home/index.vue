@@ -1,7 +1,7 @@
 <template lang="html">
    <div class="page">
         <div class="page-body page-home">
-        	here is home
+        	here is home 长发富国
             <div>{{now}}</div>
             <img src="~images/ucar/nx.png">
         </div>

@@ -24,7 +24,8 @@ var ret = {
         usedPWA: true,
         service: {
             scope: '/public/',
-            remote: []
+            remote:['//static.udache.com', '//webapp.didistatic.com'],
+            static:['/static/js/vconsole.min.js', '/static/js/polyfill.min.js']
         }
     },
     dev: {
@@ -50,7 +51,8 @@ var ret = {
         usedPWA: true,
         service: {
             scope: '/',
-            remote:[]
+            remote:['//10.179.116.215:8089', '//webapp.didistatic.com'],
+            static:['/static/js/vconsole.min.js', '/static/js/polyfill.min.js']
         }
     },
     qa: {
@@ -70,7 +72,12 @@ var ret = {
         // `npm run build --report`
         // Set to `true` or `false` to always turn it on or off
         bundleAnalyzerReport: false,
-        usedPWA: true
+        usedPWA: true,
+        service: {
+            scope: '/',
+            remote:['//10.179.116.215:8089', '//webapp.didistatic.com'],
+            static:['/static/js/vconsole.min.js', '/static/js/polyfill.min.js']
+        }
     }
 }
 process.env.BUILD_ENV = process.env.BUILD_ENV  || 'dev';

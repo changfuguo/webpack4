@@ -5,18 +5,28 @@
     <title>webpack4 demo </title>
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <script>
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js?' + new Date); }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js',
+        function(registration) {
+            console.log(registration);
+            if (registration.waiting) {
+                console.log(' registration waiting');
+            } else if (registration.active) {
+                console.log(' registration active');
+            }
+    }); }
     </script>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 
+     <script crossOrigin="Anonymous" src="//webapp.didistatic.com/static/webapp/shield/z/omega/omega/0.2.9/omega.min.js"></script>
     <script type="text/javascript" src="../static/js/polyfill.min.js"></script>
     <% var env = htmlWebpackPlugin.options.env; var sourceMap = htmlWebpackPlugin.files.sourceMap;%>
     <% if( env == 'prod' || env == 'pre') { %>
     <script type="text/javascript" src="//static.udache.com/agility-sdk/1.0.4/aio.js"></script>
 
     <% } else {%>
-
+    <script type="text/javascript" src="http://10.179.116.215:8089/sdk/dist/aio.js"></script>
+    <!--测试环境下添加vconsole工具-->
     <script src="../static/js/vconsole.min.js"></script>
     <script>
         var vConsole = new VConsole();

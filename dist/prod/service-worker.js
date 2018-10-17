@@ -8,55 +8,57 @@ self.importScripts(SW_CONFIG_NAME);
 
 /*
  common:[],
-        vendor:[],
-        manifest:[],
         static: [],
         remote: [],
-        modules: []
+        runtime: []
 */
 var STATIC_PREFIX = 'static';
 var REMOTE_PREFIX = 'remote';
-
-var VENDOR_PREFIX = 'vendor';
-var MODULES_PREFIX = 'modules';
-var MANIFEST_PREFIX = 'manifest';
-var COMMON_PREFIX = 'common';
-
+var RUNTIME_PREFIX = 'runtime';
+var expectedCaches = [STATIC_PREFIX, REMOTE_PREFIX, RUNTIME_PREFIX];
 self.addEventListener('install', function (event) {
+    console.log('sub install')
   self.skipWaiting()
   event.waitUntil(
     caches.open(STATIC_PREFIX)
       .then(function (cache) {
-        return cache.addAll(sw_config.assets)
+        return cache.addAll(sw_config[STATIC_PREFIX])
       })
   )
 })
 
 self.addEventListener('activate', function (event) {
+    console.log('sub activate')
+
   self.clients.claim();
-  // event.waitUntil(
-  //   caches.keys().then(function (cacheName) {
-  //     return Promise.all(
-  //       cacheName.filter(n => expectedCaches.indexOf(n) === -1)
-  //         .map(n => caches.delete(n))
-  //     )
-  //   })
-  // )
+  event.waitUntil(
+    caches.keys().then(function (cacheName) {
+      return Promise.all(
+        cacheName.filter(n => expectedCaches.indexOf(n) === -1)
+          .map(n => caches.delete(n))
+      )
+    })
+  )
 })
 
 self.addEventListener('fetch', function (event) {
   var requestUrl = new URL(event.request.url)
   var requestPath = requestUrl.pathname
 
-  //静态资源部经过编译的
-  if (sw_config.static.indexOf(requestPath) > -1) {
+  //静态资源部经过编译的 1、热更新的文件 2、_webpack_hmr 3、html 文件不缓存
+
+  if (stringContains(requestPath, 'hot-update.json')
+    || stringContains(requestPath, '__webpack_hmr ')
+    || stringContains(requestPath, '.html ')) {
+        event.respondWith(fetch(event.request))
+    } else if (sw_config.static.indexOf(requestPath) > -1) {
     // console.log("cache first:", requestUrl.href);
-    event.respondWith(cacheFirstStrategy(event.request))
-  } else if (stringContains(event.request.url, 'http://localhost:8092/')) {
-    event.respondWith(networkFirstStrategy(event.request))
-  } else {
-    event.respondWith(fetch(event.request))
-  }
+        event.respondWith(cacheFirstStrategy(event.request))
+    } else if (stringContains(event.request.url, 'http://localhost:8092/')) {
+        event.respondWith(networkFirstStrategy(event.request))
+    } else {
+        event.respondWith(fetch(event.request))
+    }
 })
 
 function cacheFirstStrategy (request) {
@@ -78,16 +80,31 @@ function networkFirstStrategy (request) {
 }
 
 function fetchRequestAndCache (request) {
-  return fetch(request).then(function (networkResponse) {
-    caches.open(getCacheName(request)).then(function (cache) {
-      cache.put(request, networkResponse)
+    var cacheName = getCacheName(request);
+
+    return fetch(request).then(function (networkResponse) {
+        caches.open(cacheName).then(function (cache) {
+            cache.put(request, networkResponse)
+        })
+        return networkResponse.clone()
     })
-    return networkResponse.clone()
-  })
 }
 
 function getCacheName (request) {
-  [COMMON_PREFIX, VENDOR_PREFIX, MODULES_PREFIX, manifest]
+
+    let findStaticIndex = sw_config.static.findIndex(function (url) {
+        return stringContains(request.url, url);
+    });
+    let findRuntimeIndex = sw_config.runtime.findIndex(function(url) {
+        return stringContains(request.url, url);
+    });
+    if (findStaticIndex > -1) {
+        return STATIC_PREFIX;
+    } else  if(findRuntimeIndex > -1){
+        return RUNTIME_PREFIX;
+    } else {
+        return REMOTE_PREFIX;
+    }
 }
 
 function stringContains (str, search) {
