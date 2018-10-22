@@ -17,7 +17,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             extract: true
         })
     },
-    devtool: config.cssSourceMap ? '#eval-source-map' : false,
+    devtool: config.cssSourceMap ? '#source-map' : false,
     output: {
         path: config.assetsRoot,
         filename: utils.assetsPath('[name]/index.[chunkhash:8].js'),
@@ -65,22 +65,31 @@ var webpackConfig = merge(baseWebpackConfig, {
         splitChunks: {
             chunks: 'async', // 必须三选一： "initial" | "all" | "async"
             minSize: 30000, // 最小尺寸
-            minChunks: 2, //must be greater than or equal 2. The minimum number of chunks which need to contain a module before it's moved into the commons chunk.
+            minChunks: 1, //多少个地方使用过
             maxAsyncRequests: 5, // 最大异步请求数
             maxInitialRequests: 3, // 最大初始化请求书
             name: true, // 名称，此选项可接收 function
             cacheGroups: {
-                vendor: { // key 为entry中定义的 入口名称
+                 "vendor": { // key 为entry中定义的 入口名称
                     name: 'vendor', // 要缓存的 分隔出来的 chunk 名称
-                    chunks: 'all', //all-异步加载快，但初始下载量较大，文件共用性好； initial-初始下载量较小，但异步加载量较大，文件间有重复内容
+                    chunks: 'initial', //all-异步加载快，但初始下载量较大，文件共用性好； initial-初始下载量较小，但异步加载量较大，文件间有重复内容
                     priority: -10,
+                    enforce: true,
                     reuseExistingChunk: false, // 选项用于配置在模块完全匹配时重用已有的块，而不是创建新块
                     test: /node_modules[\\/]/
+                },
+                "vendor/demo": { // key 为entry中定义的 入口名称
+                    name: 'vendor/demo', // 要缓存的 分隔出来的 chunk 名称
+                    chunks: 'initial', //all-异步加载快，但初始下载量较大，文件共用性好； initial-初始下载量较小，但异步加载量较大，文件间有重复内容
+                    priority: -9,
+                    reuseExistingChunk: true, // 选项用于配置在模块完全匹配时重用已有的块，而不是创建新块
+                    enforce: true,
+                    test: /node_modules[\\/](vue|vue-router)[\\/]/
                 },
                 common: {
                     name: 'common',
                     priority: 11,
-                    chunks: 'all',
+                    chunks: 'initial',
                     enforce: true,
                     test: /[\\/]src[\\/]common[\\/]/,
                 },

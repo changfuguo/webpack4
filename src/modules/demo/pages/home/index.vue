@@ -6,7 +6,7 @@
    </div>
 </template>
 <script type="text/babel">
-    import {mapActions, mapState, mapGetters} from 'vuex';
+    // import {mapActions, mapState, mapGetters} from 'vuex';
     import emitter from '../../../../common/mixins/emitter';
     import appConf from '../../../../config';
     import {format} from 'lib/date';

@@ -32,7 +32,7 @@ KeepEntry();
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
     baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
-
+console.log(baseWebpackConfig.entry)
 module.exports = merge(baseWebpackConfig, {
 	output: {
 		path: config.assetsRoot,
