@@ -1,7 +1,7 @@
 <template lang="html">
    <div class="page">
         <div class="page-body page-home">
-        	here is home 长发富国
+        	welcome tohere !!!
             <div>{{now}}</div>
             <img src="~images/ucar/nx.png">
         </div>
@@ -12,7 +12,7 @@
     import emitter from '../../../../common/mixins/emitter';
     import appConf from '../../../../config';
     import {format, isLeapYear} from 'lib/date';
-
+    import {a} from 'lib/module';
     export default {
         name: 'home',
         mixins: [emitter],
@@ -20,7 +20,8 @@
             return {
                 loaded: false,
                 now: format(new Date, 'yyyy-MM'),
-                isLeapYear: isLeapYear(new Date)
+                isLeapYear: isLeapYear(new Date),
+                name:''
             };
         },
         components: {
@@ -33,7 +34,12 @@
 
         },
         mounted() {
-
+            this.name = a();
         }
     };
 </script>
+<style lang="scss">
+    .fullscreen .page-home {
+        color:red;
+    }
+</style>

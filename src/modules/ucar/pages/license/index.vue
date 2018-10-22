@@ -1,7 +1,7 @@
 <template lang="html">
    <div class="page">
         <div class="page-body page-home">
-        	here is license asdf asdf
+        	welcome to here
         </div>
    </div>
 </template>

@@ -7,7 +7,8 @@ import store from './store/index.js';
 import Toast from  '../../common/components/toast/toast.js';
 import api from './api';
 
-
+var env = process.env;
+console.log(env);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 window.onerror = function(e) {
@@ -37,12 +38,12 @@ new Vue({
     render: h => h(App)
 });
 
-if ('serviceWorker' in navigator) {
-   window.addEventListener('load', () => {
-     navigator.serviceWorker.register('/service-worker.js').then(registration => {
-       console.log('SW registered: ', registration);
-     }).catch(registrationError => {
-       console.log('SW registration failed: ', registrationError);
-     });
-   });
- }
+// if ('serviceWorker' in navigator) {
+//    window.addEventListener('load', () => {
+//      navigator.serviceWorker.register('/service-worker.js').then(registration => {
+//        console.log('SW registered: ', registration);
+//      }).catch(registrationError => {
+//        console.log('SW registration failed: ', registrationError);
+//      });
+//    });
+//  }

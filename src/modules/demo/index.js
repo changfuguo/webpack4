@@ -7,7 +7,8 @@ import store from './store/index.js';
 import Toast from  '../../common/components/toast/toast.js';
 import api from './api';
 
-
+var env = process.ENV;
+console.log(env)
 Vue.use(VueRouter);
 Vue.use(VueResource);
 window.onerror = function(e) {

@@ -15,73 +15,77 @@ self.importScripts(SW_CONFIG_NAME);
 var STATIC_PREFIX = 'static';
 var REMOTE_PREFIX = 'remote';
 var RUNTIME_PREFIX = 'runtime';
+var NOCACHE_PREFIX = 'nonochace';
 var expectedCaches = [STATIC_PREFIX, REMOTE_PREFIX, RUNTIME_PREFIX];
 self.addEventListener('install', function (event) {
     console.log('sub install')
-  self.skipWaiting()
-  event.waitUntil(
-    caches.open(STATIC_PREFIX)
-      .then(function (cache) {
-        return cache.addAll(sw_config[STATIC_PREFIX])
-      })
-  )
+    self.skipWaiting()
+    event.waitUntil(
+        caches.open(STATIC_PREFIX)
+            .then(function (cache) {
+                return cache.addAll(sw_config[STATIC_PREFIX])
+            })
+    )
 })
 
 self.addEventListener('activate', function (event) {
     console.log('sub activate')
 
-  self.clients.claim();
-  event.waitUntil(
-    caches.keys().then(function (cacheName) {
-      return Promise.all(
-        cacheName.filter(n => expectedCaches.indexOf(n) === -1)
-          .map(n => caches.delete(n))
-      )
-    })
-  )
+    self.clients.claim();
+    event.waitUntil(
+        caches.keys().then(function (cacheName) {
+            return Promise.all(
+                cacheName.filter(n => expectedCaches.indexOf(n) === -1)
+                .map(n => caches.delete(n))
+            )
+        })
+    )
 })
 
 self.addEventListener('fetch', function (event) {
-  var requestUrl = new URL(event.request.url)
-  var requestPath = requestUrl.pathname
+    var requestUrl = new URL(event.request.url)
+    var requestPath = requestUrl.pathname
+    var cacheName = getCacheName(event.request);
+    console.log('fetch:',getCacheName(event.request), event.request.url);
 
-  //静态资源部经过编译的 1、热更新的文件 2、_webpack_hmr 3、html 文件不缓存
-
-  if (stringContains(requestPath, 'hot-update.json')
-    || stringContains(requestPath, '__webpack_hmr ')
-    || stringContains(requestPath, '.html ')) {
-        event.respondWith(fetch(event.request))
-    } else if (sw_config.static.indexOf(requestPath) > -1) {
-    // console.log("cache first:", requestUrl.href);
-        event.respondWith(cacheFirstStrategy(event.request))
-    } else if (stringContains(event.request.url, 'http://localhost:8092/')) {
-        event.respondWith(networkFirstStrategy(event.request))
-    } else {
+    //本地静态文件
+    if (cacheName == STATIC_PREFIX) {
+        // console.log("cache first:", requestUrl.href);
+        event.respondWith(cacheFirstStrategy(event.request, cacheName))
+    } else if (cacheName == REMOTE_PREFIX
+        || cacheName == RUNTIME_PREFIX) {
+        event.respondWith(networkFirstStrategy(event.request, cacheName))
+    } else { //stringContains(event.request.url, 'http://localhost:8092/')
         event.respondWith(fetch(event.request))
     }
 })
-
-function cacheFirstStrategy (request) {
-  return caches.match(request).then(function (cacheResponse) {
-    return cacheResponse || fetchRequestAndCache(request)
-  })
-}
-
-function networkFirstStrategy (request) {
-  return fetchRequestAndCache(request).catch(function (response) {
+self.addEventListener('sync', function(event) {
+    if (event.tag === 'myFirstSync') {
+        console.log('myFirstSync')
+    }
+});
+function cacheFirstStrategy (request, cacheName) {
+    cacheName = cacheName || getCacheName(request);
     return caches.match(request).then(function (cacheResponse) {
-      if (!cacheResponse) {
-        var requestUrl = new URL(request.url)
-        var requestPath = requestUrl.pathname
-      }
-      return cacheResponse
+        return cacheResponse || fetchRequestAndCache(request)
     })
-  })
 }
 
-function fetchRequestAndCache (request) {
-    var cacheName = getCacheName(request);
+function networkFirstStrategy (request, cacheName) {
+    cacheName = cacheName || getCacheName(request);
+    return fetchRequestAndCache(request, cacheName).catch(function (response) {
+        return caches.match(request).then(function (cacheResponse) {
+            if (!cacheResponse) {
+                var requestUrl = new URL(request.url)
+                var requestPath = requestUrl.pathname
+            }
+        return cacheResponse
+        })
+    })
+}
 
+function fetchRequestAndCache (request, cacheName) {
+    cacheName = cacheName || getCacheName(request);
     return fetch(request).then(function (networkResponse) {
         caches.open(cacheName).then(function (cache) {
             cache.put(request, networkResponse)
@@ -90,23 +94,27 @@ function fetchRequestAndCache (request) {
     })
 }
 
+
 function getCacheName (request) {
 
-    let findStaticIndex = sw_config.static.findIndex(function (url) {
-        return stringContains(request.url, url);
-    });
-    let findRuntimeIndex = sw_config.runtime.findIndex(function(url) {
-        return stringContains(request.url, url);
-    });
-    if (findStaticIndex > -1) {
+    if (arrayContains(request, sw_config.static)) {
         return STATIC_PREFIX;
-    } else  if(findRuntimeIndex > -1){
+    } else  if(arrayContains(request, sw_config.runtime)){
         return RUNTIME_PREFIX;
-    } else {
+    } else if (arrayContains(request, sw_config.remote)){
         return REMOTE_PREFIX;
+    } else {
+        return NOCACHE_PREFIX;
     }
 }
 
+function arrayContains (request, array) {
+    let index = array.findIndex(function(item) {
+        return stringContains(request.url, item);
+    });
+
+    return index > -1;
+}
 function stringContains (str, search) {
   return str.indexOf(search) !== -1
 }

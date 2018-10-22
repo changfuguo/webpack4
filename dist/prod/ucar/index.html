@@ -5,19 +5,26 @@
     <title>webpack4 demo </title>
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <script>
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/service-worker.js',
-        function(registration) {
-            console.log(registration);
-            if (registration.waiting) {
-                console.log(' registration waiting');
-            } else if (registration.active) {
-                console.log(' registration active');
-            }
-    }); }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js',
+            function(registration) {
+                console.log(registration);
+                if (registration.waiting) {
+                    console.log(' registration waiting');
+                } else if (registration.active) {
+                    console.log(' registration active');
+                }
+                navigator.serviceWorker.postMessage({type:"send", content: '我在这里呀!'})
+            });
+        navigator.serviceWorker.ready.then(function(swRegistration) {
+            return swRegistration.sync.register('myFirstSync');
+        });
+    }
     </script>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 
+     <script crossOrigin="Anonymous" src="//webapp.didistatic.com/static/webapp/shield/z/omega/omega/0.2.9/omega.min.js"></script>
     <script type="text/javascript" src="../static/js/polyfill.min.js"></script>
     
     
@@ -25,7 +32,7 @@
 
     
     <script type="text/javascript">
-    window.__sourceMap = {"publicPath":"../","chunks":{"common":{"size":21287,"entry":"../common/main.b1fe9874.js","hash":"b1fe98742c344f505817","css":[]},"vendor":{"size":640966,"entry":"../vendor/main.6b24a399.js","hash":"6b24a3992e454e52662c","css":[]},"manifest/ucar":{"size":0,"entry":"../manifest/ucar/index.3dcfdfb3.js","hash":"3dcfdfb3d73a9107456b","css":[]},"ucar":{"size":35119,"entry":"../ucar/main.912b16ca.js","hash":"912b16ca7d42e0bfc6b6","css":["../ucar/chunk.3.css"]}},"js":["../common/main.b1fe9874.js","../vendor/main.6b24a399.js","../manifest/ucar/index.3dcfdfb3.js","../ucar/main.912b16ca.js"],"css":["../ucar/chunk.3.css"]};
+    window.__sourceMap = {"publicPath":"../","chunks":{"common":{"size":11505,"entry":"../common/main.0cb12655.js","hash":"0cb12655c7b1d6a8f2b0","css":[]},"vendor":{"size":423302,"entry":"../vendor/main.a3c8eb17.js","hash":"a3c8eb171c282ec5316a","css":[]},"manifest/ucar":{"size":0,"entry":"../manifest/ucar/index.102f44e0.js","hash":"102f44e0eaabaee74fb2","css":[]},"ucar":{"size":3402,"entry":"../ucar/main.41dd0cba.js","hash":"41dd0cba07200bfc59f9","css":[]}},"js":["../common/main.0cb12655.js","../vendor/main.a3c8eb17.js","../manifest/ucar/index.102f44e0.js","../ucar/main.41dd0cba.js"],"css":[]};
     </script>
     <script type="text/javascript">
         // 因为login登录组件是px布局 只能采取非缩放的rem布局 最好inline
@@ -46,11 +53,11 @@
         })(document, window);
     </script>
 
-<link href="../ucar/chunk.3.css" rel="stylesheet"></head>
+</head>
 <body data-ctr-page = "pageview" class="fullscreen">
 <div id="application" class="view" ></div>
 <div style="width:0;height:0">
 
 </div>
-<script type="text/javascript" src="../common/main.b1fe9874.js"></script><script type="text/javascript" src="../vendor/main.6b24a399.js"></script><script type="text/javascript" src="../manifest/ucar/index.3dcfdfb3.js"></script><script type="text/javascript" src="../ucar/main.912b16ca.js"></script></body>
+<script type="text/javascript" src="../common/main.0cb12655.js"></script><script type="text/javascript" src="../vendor/main.a3c8eb17.js"></script><script type="text/javascript" src="../manifest/ucar/index.102f44e0.js"></script><script type="text/javascript" src="../ucar/main.41dd0cba.js"></script></body>
 </html>

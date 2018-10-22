@@ -8,6 +8,7 @@
         "scope": "/risk_m/"
     },
     "main": "index.js",
+    "sideEffects":false,
     "scripts": {
         "start": "BUILD_ENV=dev node build/dev-server.js",
         "build": "cross-env BUILD_ENV=prod NODE_ENV=production node build/build.js",
@@ -26,6 +27,7 @@
     "license": "ISC",
     "dependencies": {
         "assets-webpack-plugin": "^3.9.7",
+        "lodash-es": "^4.17.11",
         "vue": "^2.5.16",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1",

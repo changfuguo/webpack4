@@ -59,7 +59,11 @@ self.addEventListener('fetch', function (event) {
         event.respondWith(fetch(event.request))
     }
 })
-
+self.addEventListener('sync', function(event) {
+    if (event.tag === 'myFirstSync') {
+        console.log('myFirstSync')
+    }
+});
 function cacheFirstStrategy (request, cacheName) {
     cacheName = cacheName || getCacheName(request);
     return caches.match(request).then(function (cacheResponse) {
