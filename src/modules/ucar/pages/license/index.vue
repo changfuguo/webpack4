@@ -1,7 +1,7 @@
 <template lang="html">
    <div class="page">
         <div class="page-body page-home">
-        	welcome to here
+        	welcome to here !! {{date}}
         </div>
    </div>
 </template>
@@ -16,7 +16,8 @@
         mixins: [emitter],
         data() {
             return {
-                loaded: false
+                loaded: false,
+                date: new Date
             };
         },
         components: {
