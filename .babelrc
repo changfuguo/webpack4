@@ -7,7 +7,7 @@
 	        },
 	        "modules": false,
 		    "useBuiltIns": true,
-		    "loose":true
+		    "loose":false
     	}]
   	],
   	"plugins": [

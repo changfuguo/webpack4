@@ -27,6 +27,8 @@ module.exports = {
             'sass': resolve('src/common/sass')
         }
     },
+    // target:"node",
+
     module: {
         rules: [
             // {
@@ -100,6 +102,8 @@ module.exports = {
         fs: 'empty',
         net: 'empty',
         tls: 'empty',
-        child_process: 'empty'
+        child_process: 'empty',
+        __filename: false,
+        __dirname: false
     }
 }

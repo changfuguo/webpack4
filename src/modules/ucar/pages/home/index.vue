@@ -2,7 +2,7 @@
    <div class="page">
         <div class="page-body page-home">
         	welcome tohere !!!
-            <div>{{now}}</div>
+            <div>{{name}}</div>
             <img src="~images/ucar/nx.png">
         </div>
    </div>

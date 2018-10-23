@@ -76,7 +76,13 @@ var webpackConfig = merge(baseWebpackConfig, {
                     priority: -10,
                     enforce: true,
                     reuseExistingChunk: false, // 选项用于配置在模块完全匹配时重用已有的块，而不是创建新块
-                    test: /node_modules[\\/]/
+                    // test: /node_modules[\\/]/
+                    test: function(module, chunkx) {
+                        for (const chunk of module.chunksIterable) {
+                               console.log(chunk.name, module.nameForCondition && module.nameForCondition())
+                        }
+                        return /node_modules[\\/]/.test
+                    }
                 },
                 "vendor/demo": { // key 为entry中定义的 入口名称
                     name: 'vendor/demo', // 要缓存的 分隔出来的 chunk 名称

@@ -23,5 +23,6 @@
 
 [Web离线应用解决方案——ServiceWorker](https://www.cnblogs.com/dojo-lzz/p/8047336.html)
 
+[medium/webpack](https://medium.com/webpack)
 
 //  chrome://serviceworker-internals/
